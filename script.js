@@ -581,3 +581,162 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+// Preview Gallery Modal Functionality
+let currentSlideIndex = 0;
+let totalSlides = 0;
+
+// Project preview configurations
+const projectPreviews = {
+    'kantin-jawara': {
+        title: 'Kantin Jawara - Preview Gallery',
+        images: [
+            'assets/projects/previews-kantin-jawara/preview-kantinjawara-1.png',
+            'assets/projects/previews-kantin-jawara/preview-kantinjawara-2.png',
+            'assets/projects/previews-kantin-jawara/preview-kantinjawara-3.png',
+            'assets/projects/previews-kantin-jawara/preview-kantinjawara-4.png',
+            'assets/projects/previews-kantin-jawara/preview-kantinjawara-5.png',
+            'assets/projects/previews-kantin-jawara/preview-kantinjawara-6.png',
+            'assets/projects/previews-kantin-jawara/preview-kantinjawara-7.png',
+            'assets/projects/previews-kantin-jawara/preview-kantinjawara-8.png'
+        ]
+    }
+    // Add more projects here as needed
+};
+
+function openPreviewModal(projectId) {
+    const modal = document.getElementById('previewModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const carouselTrack = document.getElementById('carouselTrack');
+    const carouselIndicators = document.getElementById('carouselIndicators');
+
+    const project = projectPreviews[projectId];
+    if (!project) {
+        console.error('Project not found:', projectId);
+        return;
+    }
+
+    // Set modal title
+    modalTitle.textContent = project.title;
+
+    // Clear existing slides and indicators
+    carouselTrack.innerHTML = '';
+    carouselIndicators.innerHTML = '';
+
+    // Create slides
+    project.images.forEach((imageSrc, index) => {
+        // Create slide
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide';
+        slide.innerHTML = `<img src="${imageSrc}" alt="Preview ${index + 1}" loading="lazy">`;
+        carouselTrack.appendChild(slide);
+
+        // Create indicator
+        const indicator = document.createElement('button');
+        indicator.className = `carousel-indicator ${index === 0 ? 'active' : ''}`;
+        indicator.onclick = () => goToSlide(index);
+        carouselIndicators.appendChild(indicator);
+    });
+
+    // Set initial values
+    currentSlideIndex = 0;
+    totalSlides = project.images.length;
+    updateCarouselPosition();
+
+    // Show modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+function closePreviewModal() {
+    const modal = document.getElementById('previewModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = ''; // Restore scrolling
+}
+
+function nextSlide() {
+    currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+    updateCarouselPosition();
+    updateIndicators();
+}
+
+function prevSlide() {
+    currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+    updateCarouselPosition();
+    updateIndicators();
+}
+
+function goToSlide(index) {
+    currentSlideIndex = index;
+    updateCarouselPosition();
+    updateIndicators();
+}
+
+function updateCarouselPosition() {
+    const carouselTrack = document.getElementById('carouselTrack');
+    const translateX = -currentSlideIndex * 100;
+    carouselTrack.style.transform = `translateX(${translateX}%)`;
+}
+
+function updateIndicators() {
+    const indicators = document.querySelectorAll('.carousel-indicator');
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentSlideIndex);
+    });
+}
+
+// Keyboard navigation for modal
+document.addEventListener('keydown', (e) => {
+    const modal = document.getElementById('previewModal');
+    if (!modal.classList.contains('active')) return;
+
+    switch (e.key) {
+        case 'Escape':
+            closePreviewModal();
+            break;
+        case 'ArrowLeft':
+            prevSlide();
+            break;
+        case 'ArrowRight':
+            nextSlide();
+            break;
+    }
+});
+
+// Close modal when clicking outside
+document.getElementById('previewModal').addEventListener('click', (e) => {
+    if (e.target.id === 'previewModal') {
+        closePreviewModal();
+    }
+});
+
+// Touch/swipe support for mobile
+let startX = 0;
+let isDragging = false;
+
+document.getElementById('previewModal').addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+});
+
+document.getElementById('previewModal').addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+});
+
+document.getElementById('previewModal').addEventListener('touchend', (e) => {
+    if (!isDragging) return;
+
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+
+    if (Math.abs(diff) > 50) { // Minimum swipe distance
+        if (diff > 0) {
+            nextSlide(); // Swipe left -> next slide
+        } else {
+            prevSlide(); // Swipe right -> previous slide
+        }
+    }
+
+    isDragging = false;
+});

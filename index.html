@@ -117,8 +117,14 @@
             Tentang Saya
           </h2>
           <p class="about-text">
-            Saya adalah mahasiswa S1 Informatika di Universitas Sultan Ageng
-            Tirtayasa
+            Mahasiswa aktif Informatika semester 4 Universitas Sultan Ageng
+            Tirtayasa dengan minat besar di bidang web development, android
+            development, dan machine learning. Memiliki pengalaman mengembangkan
+            aplikasi web melalui berbagai proyek kuliah dan personal project.
+            Aktif mengikuti kursus online untuk mengasah kemampuan programming.
+            Selalu haus akan ilmu pengetahuan baru dan mencari kesempatan magang
+            untuk mengaplikasikan ilmu yang dipelajari serta mendapatkan
+            pengalaman praktis di industri teknologi.
           </p>
         </section>
 
@@ -199,6 +205,106 @@
             Proyek
           </h2>
           <div class="projects-grid">
+            <div class="project-card">
+              <div class="project-image-container">
+                <img
+                  src="assets/projects/KANTIN JAWARA.png"
+                  alt="Kantin Jawara"
+                  class="project-image"
+                />
+
+                <!-- Preview Gallery Button -->
+                <button
+                  class="preview-gallery-btn"
+                  onclick="openPreviewModal('kantin-jawara')"
+                >
+                  <i class="fas fa-images"></i>
+                  Preview Gallery
+                </button>
+
+                <div class="project-overlay">
+                  <div class="project-links">
+                    <a
+                      href="https://github.com/penyulaut/Kantin-Jawara"
+                      target="_blank"
+                      class="project-link"
+                    >
+                      <i class="fab fa-github"></i> GitHub
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="project-info">
+                <div class="project-header">
+                  <h3 class="project-title">Kantin Jawara</h3>
+                  <div class="project-status-container">
+                    <span class="project-status completed">Selesai</span>
+                    <span class="project-repo-status public">Public</span>
+                  </div>
+                </div>
+                <p class="project-description">
+                  Proyek ini adalah sebuah aplikasi android yang dirancang untuk
+                  membantu mahasiswa dalam melakukan pemesanan makanan di kantin
+                  kampus. Dengan antarmuka yang responsif dan mudah digunakan,
+                  pengguna dapat menjelajahi menu, memilih item, dan melakukan
+                  pemesanan dengan cepat dan aman. Aplikasi ini bertujuan untuk
+                  memberikan pengalaman yang lebih baik dalam berbelanja makanan
+                  di kampus.
+                </p>
+                <div class="project-tech">
+                  <span class="tech-tag">Flutter</span>
+                  <span class="tech-tag">Laravel</span>
+                </div>
+              </div>
+            </div>
+            <div class="project-card">
+              <div class="project-image-container">
+                <img
+                  src="assets/projects/kaja-backend.png"
+                  alt="Kaja Backend"
+                  class="project-image"
+                />
+
+                <div class="project-overlay">
+                  <div class="project-links">
+                    <a
+                      href="https://github.com/firdausmntp/kaja-backend"
+                      target="_blank"
+                      class="project-link"
+                    >
+                      <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a
+                      href="https://registry.scalar.com/@firdaussatut-gmail-com-team/apis/kaja-kantin-jawara-api/1.0.9?format=preview"
+                      target="_blank"
+                      class="project-link"
+                    >
+                      <i class="fas fa-external-link-alt"></i> Api Documentation
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="project-info">
+                <div class="project-header">
+                  <h3 class="project-title">Kantin Jawara Backend</h3>
+                  <div class="project-status-container">
+                    <span class="project-status completed">Selesai</span>
+                    <span class="project-repo-status public">Public</span>
+                  </div>
+                </div>
+                <p class="project-description">
+                  Proyek ini adalah sebuah API yang dirancang untuk
+                  memfasilitasi pengelolaan data kantin di kampus. Dengan
+                  fitur-fitur seperti manajemen menu, transaksi, dan laporan,
+                  API ini bertujuan untuk memberikan kemudahan dalam mengelola
+                  operasional kantin secara efisien. Proyek ini juga sebagai
+                  pembelajaran saya dalam membuat api dan mengambil api.
+                </p>
+                <div class="project-tech">
+                  <span class="tech-tag">Laravel</span>
+                </div>
+              </div>
+            </div>
             <div class="project-card">
               <div class="project-image-container">
                 <img
@@ -580,6 +686,36 @@
     <button class="scroll-to-top" id="scrollToTop">
       <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Preview Modal -->
+    <div class="modal" id="previewModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="modalTitle">Preview Gallery</h3>
+          <button class="modal-close" onclick="closePreviewModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="carousel-container">
+          <div class="carousel-wrapper">
+            <div class="carousel-track" id="carouselTrack">
+              <!-- Slides will be dynamically added here -->
+            </div>
+            <!-- Navigation arrows -->
+            <button class="carousel-nav carousel-prev" onclick="prevSlide()">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-nav carousel-next" onclick="nextSlide()">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+            <!-- Indicators -->
+            <div class="carousel-indicators" id="carouselIndicators">
+              <!-- Indicators will be dynamically added here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>
