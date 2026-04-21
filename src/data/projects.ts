@@ -154,7 +154,7 @@ export const projects: ProjectData[] = [
     image: "/assets/projects/KANTIN JAWARA.png",
     alt: "Kantin Jawara",
     description:
-      "Proyek ini adalah sebuah aplikasi android yang dirancang untuk membantu mahasiswa dalam melakukan pemesanan makanan di kantin kampus.",
+      "Proyek ini adalah sebuah aplikasi mobile yang dirancang untuk membantu mahasiswa dalam melakukan pemesanan makanan di kantin kampus.",
     tech: ["Flutter", "Laravel"],
     statusText: "Selesai",
     statusClass: "completed",
