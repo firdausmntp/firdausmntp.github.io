@@ -1,0 +1,84 @@
+---
+import { Image } from "astro:assets";
+import type { ProjectData } from "../../data/projects";
+
+interface Props {
+  project: ProjectData;
+}
+
+const { project } = Astro.props;
+const normalizedAlt = (project.alt || "").trim().toLowerCase();
+const normalizedTitle = project.title.trim().toLowerCase();
+const imageAlt = normalizedAlt && normalizedAlt !== normalizedTitle
+  ? project.alt
+  : `Tampilan proyek ${project.title}`;
+
+const getDomainLabel = (href: string) => {
+  try {
+    return new URL(href).hostname.replace(/^www\./, "");
+  } catch {
+    return "Visit Link";
+  }
+};
+
+const badgeStyle =
+  project.badgeColor === "danger"
+    ? "display: inline-block; background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 0.15rem 0.5rem; border-radius: var(--radius-full); font-size: 0.75rem; border: 1px solid rgba(239, 68, 68, 0.2); margin-left: 0.5rem; vertical-align: middle;"
+    : "display: inline-block; background: rgba(139, 92, 246, 0.1); color: #8b5cf6; padding: 0.15rem 0.5rem; border-radius: var(--radius-full); font-size: 0.75rem; border: 1px solid rgba(139, 92, 246, 0.2); margin-left: 0.5rem; vertical-align: middle;";
+---
+
+<div class="project-card project-item" data-category={Array.isArray(project.category) ? project.category.join(",") : project.category}>
+  <div class="project-image-container">
+    <Image
+      src={project.image}
+      alt={imageAlt}
+      class="project-image"
+      width={1280}
+      height={720}
+      loading="lazy"
+      decoding="async"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+
+    {
+      project.previewGalleryId && (
+        <button class="preview-gallery-btn" type="button" onclick={`openPreviewModal('${project.previewGalleryId}')`} aria-label={`Open preview gallery for ${project.title}`}>
+          <i class="fas fa-images" aria-hidden="true"></i>
+          Preview Gallery
+        </button>
+      )
+    }
+
+    <div class="project-overlay">
+      <div class="project-links">
+        {
+          project.links.map((link) => (
+            <a href={link.href} target="_blank" rel="noopener noreferrer" class="project-link">
+              <i class={link.iconClass ?? "fas fa-external-link-alt"} aria-hidden="true"></i> {link.label ?? getDomainLabel(link.href)}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+  <div class="project-info">
+    <div class="project-header">
+      <h3 class="project-title">
+        {project.title}
+        {project.badgeText && <span style={badgeStyle}>{project.badgeText}</span>}
+      </h3>
+      <div class="project-status-container">
+        <span class={`project-status ${project.statusClass}`}>{project.statusText}</span>
+        <span class={`project-repo-status ${project.repoClass}`}>{project.repoText}</span>
+      </div>
+    </div>
+    <p class="project-description">{project.description}</p>
+    <div class="project-tech">
+      {
+        project.tech.map((item) => (
+          <span class="tech-tag">{item}</span>
+        ))
+      }
+    </div>
+  </div>
+</div>

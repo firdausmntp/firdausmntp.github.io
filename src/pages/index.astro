@@ -1,0 +1,31 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Navigation from "../components/layout/Navigation.astro";
+import HeroSection from "../components/sections/HeroSection.astro";
+import CoreSections from "../components/sections/CoreSections.astro";
+import ProjectsSection from "../components/sections/ProjectsSection.astro";
+import PreviewModal from "../components/projects/PreviewModal.astro";
+---
+
+<MainLayout title="Firdaus Satrio Utomo - CV">
+	<Navigation />
+
+	<div class="container">
+		<HeroSection />
+
+		<main class="main-content">
+			<CoreSections />
+			<ProjectsSection />
+		</main>
+	</div>
+
+	<button class="theme-toggle" id="theme-toggle-fab" type="button" aria-label="Toggle theme">
+		<i class="fas fa-moon" aria-hidden="true"></i>
+	</button>
+
+	<button class="scroll-to-top" id="scrollToTop" type="button" aria-label="Scroll to top">
+		<i class="fas fa-arrow-up" aria-hidden="true"></i>
+	</button>
+
+	<PreviewModal />
+</MainLayout>

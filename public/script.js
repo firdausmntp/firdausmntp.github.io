@@ -1,9 +1,9 @@
 // Theme Toggle
 document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggles = document.querySelectorAll('.theme-toggle, .theme-toggle-btn, #theme-toggle');
     const body = document.body;
 
-    if (!themeToggle) {
+    if (themeToggles.length === 0) {
         console.error('Theme toggle button not found in the document');
         return;
     }
@@ -18,32 +18,35 @@ document.addEventListener('DOMContentLoaded', () => {
     updateThemeIcon(initialTheme);
 
     // Theme toggle click handler
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = body.getAttribute('data-theme') || 'light';
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    themeToggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-        body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
 
-        console.log('Theme switched to:', newTheme);
+            console.log('Theme switched to:', newTheme);
+        });
     });
 });
 
 function updateThemeIcon(theme) {
-    const themeToggle = document.getElementById('theme-toggle');
-    if (!themeToggle) return;
-
-    const icon = themeToggle.querySelector('i');
-    if (!icon) {
-        // If icon doesn't exist, create it
-        const newIcon = document.createElement('i');
-        newIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        themeToggle.appendChild(newIcon);
-    } else {
-        // Update existing icon
-        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-    }
+    const themeToggles = document.querySelectorAll('.theme-toggle, .theme-toggle-btn, #theme-toggle');
+    
+    themeToggles.forEach(toggle => {
+        const icon = toggle.querySelector('i');
+        if (!icon) {
+            // If icon doesn't exist, create it
+            const newIcon = document.createElement('i');
+            newIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            toggle.appendChild(newIcon);
+        } else {
+            // Update existing icon
+            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+    });
 }
 
 // Smooth scrolling for internal links
@@ -71,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
         navToggle.addEventListener('click', () => {
             navToggle.classList.toggle('active');
             navMenu.classList.toggle('active');
+            navToggle.setAttribute('aria-expanded', navMenu.classList.contains('active') ? 'true' : 'false');
         });
     }
 
@@ -79,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
         link.addEventListener('click', () => {
             navToggle.classList.remove('active');
             navMenu.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
         });
     });
 
@@ -125,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Typing animation for title
-    const titles = ["Web Developer", "Frontend Developer", "UI/UX Enthusiast"];
+  const titles = ["Website Developer", "Flutter Developer", "Reverse Engineering Enthusiast"];
     const titleElement = document.querySelector('.title-animation');
     let titleIndex = 0;
     let charIndex = 0;
@@ -177,6 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
         navToggle.addEventListener('click', function () {
             navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
+            navToggle.setAttribute('aria-expanded', navMenu.classList.contains('active') ? 'true' : 'false');
         });
     }
 
@@ -186,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
         link.addEventListener('click', function () {
             navMenu.classList.remove('active');
             navToggle.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
         });
     });
 
@@ -260,72 +267,114 @@ function enhancedPreloader() {
     const preloader = document.createElement('div');
     preloader.className = 'preloader';
     preloader.innerHTML = `
-        <div class="preloader-content">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Loading Portfolio...</div>
+        <div class="preloader-content pt-style">
+            <div class="loading-brand">FIRDAUS S. U.</div>
+            <div class="loading-counter">0%</div>
             <div class="loading-progress">
                 <div class="progress-bar"></div>
             </div>
+            <div class="loading-text">Preparing Experience</div>
         </div>
     `;
     document.body.appendChild(preloader);
 
     // Simulate loading progress
     const progressBar = preloader.querySelector('.progress-bar');
+    const counter = preloader.querySelector('.loading-counter');
+    const textTarget = preloader.querySelector('.loading-text');
     let progress = 0;
 
     const loadingInterval = setInterval(() => {
-        progress += Math.random() * 15;
+        progress += Math.random() * 12 + 1; // smoother increments
         if (progress > 100) progress = 100;
 
         progressBar.style.width = `${progress}%`;
+        counter.textContent = `${Math.floor(progress)}%`;
+        
+        if (progress > 60) textTarget.textContent = "Loading Assets...";
+        if (progress > 90) textTarget.textContent = "Welcome!";
 
         if (progress >= 100) {
             clearInterval(loadingInterval);
             setTimeout(() => {
-                preloader.style.opacity = '0';
+                const content = preloader.querySelector('.preloader-content');
+                content.style.transform = 'translateY(-20px)';
+                content.style.opacity = '0';
+                content.style.transition = 'all 0.5s ease';
+                
                 setTimeout(() => {
-                    preloader.remove();
-                    // Call smooth reveal for elements instead of initAnimations
-                    document.querySelectorAll('.section').forEach((section, index) => {
-                        section.style.opacity = '0';
-                        section.style.transform = 'translateY(20px)';
-                        setTimeout(() => {
-                            section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                            section.style.opacity = '1';
-                            section.style.transform = 'translateY(0)';
-                        }, index * 200);
-                    });
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.remove();
+                        // Smooth reveal for elements
+                        document.querySelectorAll('.section').forEach((section, index) => {
+                            section.style.opacity = '0';
+                            section.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                section.style.transition = 'opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
+                                section.style.opacity = '1';
+                                section.style.transform = 'translateY(0)';
+                            }, index * 100 + 100);
+                        });
+                    }, 500);
                 }, 300);
-            }, 500);
+            }, 600); // Hang at 100% briefly
         }
-    }, 100);
+    }, 60);
 }
 
 // Add loading progress styles
 const loadingStyle = document.createElement('style');
 loadingStyle.textContent = `
+    .pt-style {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    .loading-brand {
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: 4px;
+        color: var(--text-color);
+        opacity: 0.8;
+    }
+    
+    .loading-counter {
+        font-size: 4.5rem;
+        font-weight: 300;
+        font-family: 'Outfit', sans-serif;
+        color: var(--primary-color);
+        line-height: 1;
+    }
+    
     .loading-progress {
-        width: 200px;
-        height: 4px;
-        background: rgba(37, 99, 235, 0.2);
-        border-radius: 2px;
-        margin-top: 1rem;
+        width: 250px;
+        height: 2px;
+        background: rgba(33, 32, 30, 0.1);
+        border-radius: 4px;
         overflow: hidden;
+        position: relative;
     }
     
     .progress-bar {
         height: 100%;
-        background: linear-gradient(90deg, var(--primary-color), #8b5cf6);
-        border-radius: 2px;
+        background: var(--primary-color);
         width: 0;
-        transition: width 0.3s ease;
+        transition: width 0.15s ease-out;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.5);
     }
     
     .loading-text {
-        margin-top: 1rem;
-        color: var(--text-color);
+        font-size: 0.85rem;
+        color: var(--text-color-light);
+        text-transform: uppercase;
+        letter-spacing: 2px;
         font-weight: 500;
+        transition: opacity 0.3s ease;
     }
 `;
 document.head.appendChild(loadingStyle);
@@ -342,15 +391,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const initialTheme = savedTheme || (prefersDarkMode ? 'dark' : 'light');
     body.setAttribute('data-theme', initialTheme);
     updateThemeIcon(initialTheme);
-});
-
-// Parallax effect for header
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const header = document.querySelector('.header');
-    if (header) {
-        header.style.transform = `translateY(${scrolled * 0.1}px)`;
-    }
 });
 
 // Text reveal animation
@@ -628,7 +668,7 @@ function openPreviewModal(projectId) {
         // Create slide
         const slide = document.createElement('div');
         slide.className = 'carousel-slide';
-        slide.innerHTML = `<img src="${imageSrc}" alt="Preview ${index + 1}" loading="lazy">`;
+        slide.innerHTML = `<img src="${imageSrc}" alt="${project.title} preview ${index + 1}" loading="lazy">`;
         carouselTrack.appendChild(slide);
 
         // Create indicator
@@ -645,12 +685,14 @@ function openPreviewModal(projectId) {
 
     // Show modal
     modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden'; // Prevent background scrolling
 }
 
 function closePreviewModal() {
     const modal = document.getElementById('previewModal');
     modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = ''; // Restore scrolling
 }
 
@@ -739,4 +781,152 @@ document.getElementById('previewModal').addEventListener('touchend', (e) => {
     }
 
     isDragging = false;
+});
+
+
+// Project Filter Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectItems = document.querySelectorAll('.project-item');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            projectItems.forEach(item => {
+                const categories = (item.getAttribute('data-category') || '')
+                    .split(',')
+                    .map(category => category.trim())
+                    .filter(Boolean);
+
+                if (filterValue === 'all' || categories.includes(filterValue)) {
+                    item.classList.remove('hide');
+                    item.style.opacity = '1';
+                } else {
+                    item.classList.add('hide');
+                    item.style.opacity = '0';
+                }
+            });
+        });
+    });
+});
+
+// Project card click feedback (ripple + pressed state)
+document.addEventListener('DOMContentLoaded', () => {
+    const projectCards = document.querySelectorAll('.project-card');
+
+    projectCards.forEach((card) => {
+        card.addEventListener('pointerdown', (event) => {
+            card.classList.add('is-pressed');
+
+            const rect = card.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.className = 'project-click-ripple';
+            ripple.style.left = `${event.clientX - rect.left}px`;
+            ripple.style.top = `${event.clientY - rect.top}px`;
+
+            card.appendChild(ripple);
+            ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
+        });
+
+        card.addEventListener('pointerup', () => {
+            card.classList.remove('is-pressed');
+        });
+
+        card.addEventListener('pointerleave', () => {
+            card.classList.remove('is-pressed');
+        });
+    });
+});
+
+// Figma-like cursor interaction for desktop pointers
+document.addEventListener('DOMContentLoaded', () => {
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+
+    if (prefersReducedMotion || isCoarsePointer) {
+        return;
+    }
+
+    const body = document.body;
+    const dot = document.createElement('div');
+    dot.className = 'custom-cursor-dot';
+
+    const ring = document.createElement('div');
+    ring.className = 'custom-cursor-ring';
+    const label = document.createElement('span');
+    label.className = 'custom-cursor-label';
+    label.textContent = 'Open';
+    ring.appendChild(label);
+
+    body.appendChild(dot);
+    body.appendChild(ring);
+    body.classList.add('cursor-enhanced');
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let ringX = 0;
+    let ringY = 0;
+
+    const interactiveSelectors = 'a, button, .project-card, .project-link, .filter-btn, .preview-gallery-btn';
+
+    const setCursorLabel = (target) => {
+        if (!target) {
+            label.textContent = '';
+            return;
+        }
+
+        if (target.classList.contains('project-card') || target.classList.contains('project-link')) {
+            label.textContent = 'Open';
+            return;
+        }
+
+        if (target.classList.contains('filter-btn') || target.classList.contains('preview-gallery-btn')) {
+            label.textContent = 'View';
+            return;
+        }
+
+        if (target.tagName === 'BUTTON') {
+            label.textContent = 'Click';
+            return;
+        }
+
+        label.textContent = 'Open';
+    };
+
+    const animateRing = () => {
+        ringX += (mouseX - ringX) * 0.17;
+        ringY += (mouseY - ringY) * 0.17;
+
+        dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+        ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+
+        requestAnimationFrame(animateRing);
+    };
+
+    document.addEventListener('mousemove', (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+        body.classList.add('cursor-active');
+
+        const interactiveTarget = event.target.closest(interactiveSelectors);
+        if (interactiveTarget) {
+            body.classList.add('cursor-hover');
+            setCursorLabel(interactiveTarget);
+        } else {
+            body.classList.remove('cursor-hover');
+            label.textContent = '';
+        }
+    });
+
+    document.addEventListener('mouseleave', () => {
+        body.classList.remove('cursor-active', 'cursor-hover');
+    });
+
+    animateRing();
 });

@@ -1,0 +1,40 @@
+---
+import ProjectCard from "../projects/ProjectCard.astro";
+import { projectFilters, projects } from "../../data/projects";
+---
+
+<section class="section" id="projects">
+  <h2 class="section-title">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="section-icon"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+    Proyek
+  </h2>
+
+  <div class="project-filters">
+    {
+      projectFilters.map((filter, index) => (
+        <button type="button" class={`filter-btn ${index === 0 ? "active" : ""}`} data-filter={filter.key}>
+          {filter.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="projects-grid">
+    {
+      projects.map((project) => (
+        <ProjectCard project={project} />
+      ))
+    }
+  </div>
+
+  <div class="project-category" style="margin-top: 3rem;">
+    <h3 class="category-heading" style="margin-bottom: 1.5rem; font-family: 'Fraunces', serif; font-size: 1.65rem; font-weight: 600; letter-spacing: 0.01em; color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">Jelajahi Repository saya</h3>
+    <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; text-align: center;">
+      <i class="fas fa-microchip" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+      <p style="color: var(--text-color-light); margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;"></p>
+      <a href="https://github.com/firdausmntp" target="_blank" rel="noreferrer" class="btn primary-btn" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--primary-color); color: white; border-radius: var(--radius-md); text-decoration: none; font-weight: 500; transition: all 0.3s ease;">
+        <i class="fab fa-github" style="font-size: 1.25rem;"></i> Visit GitHub Profile
+      </a>
+    </div>
+  </div>
+</section>

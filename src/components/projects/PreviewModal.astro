@@ -1,0 +1,22 @@
+<div class="modal" id="previewModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">Preview Gallery</h3>
+      <button class="modal-close" type="button" onclick="closePreviewModal()" aria-label="Close preview modal">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="carousel-container">
+      <div class="carousel-wrapper">
+        <div class="carousel-track" id="carouselTrack"></div>
+        <button class="carousel-nav carousel-prev" type="button" onclick="prevSlide()" aria-label="Previous slide">
+          <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button class="carousel-nav carousel-next" type="button" onclick="nextSlide()" aria-label="Next slide">
+          <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        </button>
+        <div class="carousel-indicators" id="carouselIndicators"></div>
+      </div>
+    </div>
+  </div>
+</div>
