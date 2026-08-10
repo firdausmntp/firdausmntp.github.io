@@ -2,8 +2,55 @@
 import { Image } from "astro:assets";
 ---
 
-<header class="header">
-  <div class="profile">
+<header class="hero">
+  <div class="hero-main">
+    <div class="hero-status-pill">
+      <span class="status-dot-pulse"></span>
+      Available for Internship & Freelance
+    </div>
+
+    <h1 class="hero-name" id="typing-name">Firdaus Satrio Utomo</h1>
+
+    <div class="hero-role">
+      <span class="title-animation">Web Developer</span>
+      <span class="cursor"></span>
+    </div>
+
+    <div class="hero-badges">
+      <span class="learning-badge">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3m0 12v3M3 12h3m12 0h3m-4.64-4.64 2.12-2.12M5.52 18.48l2.12-2.12m0-8.48L5.52 5.24m12.96 12.96-2.12-2.12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        Learning: Mobile & Web Dev
+      </span>
+      <span class="interest-badge">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3m-9 0h10a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-5a3 3 0 0 1 3-3Z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="14" r="1" fill="currentColor"/><circle cx="15" cy="14" r="1" fill="currentColor"/><path d="M9 17h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Focus: Reverse Engineering
+      </span>
+    </div>
+
+    <div class="hero-actions">
+      <a href="/assets/CV.pdf" class="cv-download btn" download aria-label="Download CV Firdaus Satrio Utomo">
+        Download CV
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-card">
+        <span class="stat-value">1.163+</span>
+        <span class="stat-label">Pemesanan Produksi</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">3.91</span>
+        <span class="stat-label">IPK</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">Full-Cycle</span>
+        <span class="stat-label">Web & Mobile Dev</span>
+      </div>
+    </div>
+  </div>
+
+  <aside class="hero-aside">
     <div class="profile-img-container">
       <Image
         src="/assets/FOTOPROFILE.png"
@@ -16,44 +63,27 @@ import { Image } from "astro:assets";
       />
       <div class="profile-ring"></div>
     </div>
-    <div class="profile-info">
-      <div class="profile-kump">
-        <h1 class="name" id="typing-name">Firdaus Satrio Utomo</h1>
-        <a href="/assets/CV.pdf" class="cv-download btn" download>Download CV</a>
+    <div class="contact">
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m3 7 9 6 9-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <a href="mailto:firdaussatut@gmail.com">firdaussatut@gmail.com</a>
       </div>
-
-      <div class="title-container">
-        <p class="title-main">
-          <span class="title-animation">Web Developer</span>
-          <span class="cursor"></span>
-        </p>
-        <p class="title-sub">
-          <span class="learning-badge">🎯 Learning: Mobile Developer, Web Developer</span>
-          <span class="interest-badge">🤖 Interested in: Reversed Engineering</span>
-        </p>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <a href="https://wa.me/6281212571925" target="_blank" rel="noopener noreferrer">+62 812 1257 1925</a>
       </div>
-      <div class="contact">
-        <div class="contact-item">
-          <i class="fas fa-envelope" aria-hidden="true"></i>
-          <a style="color: var(--primary-color)" href="mailto:firdaussatut@gmail.com">firdaussatut@gmail.com</a>
-        </div>
-        <div class="contact-item">
-          <i class="fas fa-phone" aria-hidden="true"></i>
-          <a href="https://wa.me/6281212571925" target="_blank" rel="noopener noreferrer">+62 812 1257 1925</a>
-        </div>
-        <div class="contact-item">
-          <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-          <span>Tangerang, Indonesia</span>
-        </div>
-        <div class="contact-item">
-          <i class="fab fa-linkedin" aria-hidden="true"></i>
-          <a href="https://www.linkedin.com/in/firdaus-satrio-utomo/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-        <div class="contact-item">
-          <i class="fab fa-github" aria-hidden="true"></i>
-          <a href="https://github.com/firdausmntp" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </div>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        <span>Tangerang, Indonesia</span>
+      </div>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10v7m0-9.5v.01M12 17v-4a2.5 2.5 0 0 1 5 0v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <a href="https://www.linkedin.com/in/firdaus-satrio-utomo/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" fill="currentColor"/></svg>
+        <a href="https://github.com/firdausmntp" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </div>
-  </div>
+  </aside>
 </header>

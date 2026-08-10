@@ -306,7 +306,7 @@ export const projects: ProjectData[] = [
     image: "/assets/projects/sipinrung-adminpage.png",
     alt: "SIPINRUNG",
     description:
-      "Aplikasi web untuk peminjaman ruangan kegiatan secara online dengan alur pemesanan yang responsif. Website telah digunakan pada kampus dalam membantu proses peminjaman ruangan untuk berbagai kegiatan mahasiswa.",
+      "Aplikasi web untuk peminjaman ruangan kegiatan secara online dengan alur pemesanan yang responsif. Telah digunakan oleh Fakultas Teknik UNTIRTA dan memproses 1.163+ pemesanan hingga saat ini.",
     tech: ["Laravel", "PHP"],
     statusText: "Selesai",
     statusClass: "completed",
@@ -393,6 +393,22 @@ export const projects: ProjectData[] = [
         href: "https://firdausmntp.github.io/DeranaDeteksi/",
         iconClass: "fas fa-external-link-alt",
       },
+    ],
+  },
+  {
+    title: "Telegram Bot Development",
+    category: "backend",
+    image: "/assets/projects/secret.jpg",
+    alt: "Telegram Bot Development",
+    description:
+      "Membangun bot Telegram freelance untuk manajemen toko/katalog, administrasi pengguna, dan pemrosesan penjualan/pemesanan otomatis. Implementasi backend dan integrasi API pihak ketiga menggunakan Node.js dan Telegram Bot API.",
+    tech: ["Node.js", "Telegram Bot API"],
+    statusText: "Selesai",
+    statusClass: "completed",
+    repoText: "Private",
+    repoClass: "private",
+    links: [
+      { href: "https://t.me" },
     ],
   },
 ];

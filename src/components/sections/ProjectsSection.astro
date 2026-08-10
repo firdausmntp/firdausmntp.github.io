@@ -4,10 +4,12 @@ import { projectFilters, projects } from "../../data/projects";
 ---
 
 <section class="section" id="projects">
-  <h2 class="section-title">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="section-icon"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
-    Proyek
-  </h2>
+  <div class="section-head">
+    <h2 class="section-title">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="section-icon"><path d="m3 9 9-5 9 5-9 5-9-5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m3 14 9 5 9-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m3 19 9 5 9-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      Proyek
+    </h2>
+  </div>
 
   <div class="project-filters">
     {
@@ -21,20 +23,23 @@ import { projectFilters, projects } from "../../data/projects";
 
   <div class="projects-grid">
     {
-      projects.map((project) => (
-        <ProjectCard project={project} />
+      projects.map((project, index) => (
+        <ProjectCard project={project} featured={index === 0} />
       ))
     }
   </div>
 
-  <div class="project-category" style="margin-top: 3rem;">
-    <h3 class="category-heading" style="margin-bottom: 1.5rem; font-family: 'Fraunces', serif; font-size: 1.65rem; font-weight: 600; letter-spacing: 0.01em; color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">Jelajahi Repository saya</h3>
-    <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; text-align: center;">
-      <i class="fas fa-microchip" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
-      <p style="color: var(--text-color-light); margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;"></p>
-      <a href="https://github.com/firdausmntp" target="_blank" rel="noreferrer" class="btn primary-btn" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--primary-color); color: white; border-radius: var(--radius-md); text-decoration: none; font-weight: 500; transition: all 0.3s ease;">
-        <i class="fab fa-github" style="font-size: 1.25rem;"></i> Visit GitHub Profile
-      </a>
+  <div class="project-cta">
+    <div class="cta-copy">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v4m6-4v4M9 17v4m6-4v4M3 11h4m10 0h4M7 7H5a2 2 0 0 0-2 2v2m14-4h2a2 2 0 0 1 2 2v2M7 17H5a2 2 0 0 1-2-2v-2m14 4h2a2 2 0 0 0 2-2v-2M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div>
+        <h3>Jelajahi Repository saya</h3>
+        <p>Lihat proyek open-source dan kontribusi lainnya di GitHub.</p>
+      </div>
     </div>
+    <a href="https://github.com/firdausmntp" target="_blank" rel="noreferrer" class="cta-link">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" fill="currentColor"/></svg>
+      Visit GitHub Profile
+    </a>
   </div>
 </section>

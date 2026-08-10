@@ -1,7 +1,13 @@
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    updateThemeIcon(theme);
+}
+
 // Theme Toggle
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggles = document.querySelectorAll('.theme-toggle, .theme-toggle-btn, #theme-toggle');
-    const body = document.body;
 
     if (themeToggles.length === 0) {
         console.error('Theme toggle button not found in the document');
@@ -14,19 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const initialTheme = savedTheme || (prefersDarkMode ? 'dark' : 'light');
 
     // Set initial theme
-    body.setAttribute('data-theme', initialTheme);
-    updateThemeIcon(initialTheme);
+    applyTheme(initialTheme);
 
     // Theme toggle click handler
     themeToggles.forEach(toggle => {
         toggle.addEventListener('click', () => {
-            const currentTheme = body.getAttribute('data-theme') || 'light';
+            const currentTheme = document.body.getAttribute('data-theme') || 'light';
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeIcon(newTheme);
-
+            applyTheme(newTheme);
             console.log('Theme switched to:', newTheme);
         });
     });
@@ -173,74 +174,6 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(typeTitle, 1000);
 });
 
-// Mobile Navigation Toggle
-document.addEventListener('DOMContentLoaded', function () {
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-
-    if (navToggle && navMenu) {
-        navToggle.addEventListener('click', function () {
-            navMenu.classList.toggle('active');
-            navToggle.classList.toggle('active');
-            navToggle.setAttribute('aria-expanded', navMenu.classList.contains('active') ? 'true' : 'false');
-        });
-    }
-
-    // Close menu when clicking on a link
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function () {
-            navMenu.classList.remove('active');
-            navToggle.classList.remove('active');
-            navToggle.setAttribute('aria-expanded', 'false');
-        });
-    });
-
-    // Add active class to nav links based on scroll position
-    window.addEventListener('scroll', function () {
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        let currentSection = '';
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-
-            if (window.pageYOffset >= sectionTop - 150) {
-                currentSection = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').slice(1) === currentSection) {
-                link.classList.add('active');
-            }
-        });
-    });
-});
-
-// Enhanced animations and counters
-function animateCounters() {
-    const counters = document.querySelectorAll('.stat-number');
-
-    counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'));
-        const current = parseInt(counter.textContent);
-        const increment = target / 100;
-
-        if (current < target) {
-            counter.textContent = Math.ceil(current + increment);
-            setTimeout(() => animateCounters(), 20);
-        } else {
-            counter.textContent = target;
-        }
-    });
-}
-
-// Remove particle effect - it can be distracting and performance-intensive
-
 // Scroll progress indicator
 function createScrollProgress() {
     const progressBar = document.createElement('div');
@@ -262,126 +195,8 @@ function createScrollProgress() {
     });
 }
 
-// Enhanced preloader with progress
-function enhancedPreloader() {
-    const preloader = document.createElement('div');
-    preloader.className = 'preloader';
-    preloader.innerHTML = `
-        <div class="preloader-content pt-style">
-            <div class="loading-brand">FIRDAUS S. U.</div>
-            <div class="loading-counter">0%</div>
-            <div class="loading-progress">
-                <div class="progress-bar"></div>
-            </div>
-            <div class="loading-text">Preparing Experience</div>
-        </div>
-    `;
-    document.body.appendChild(preloader);
-
-    // Simulate loading progress
-    const progressBar = preloader.querySelector('.progress-bar');
-    const counter = preloader.querySelector('.loading-counter');
-    const textTarget = preloader.querySelector('.loading-text');
-    let progress = 0;
-
-    const loadingInterval = setInterval(() => {
-        progress += Math.random() * 12 + 1; // smoother increments
-        if (progress > 100) progress = 100;
-
-        progressBar.style.width = `${progress}%`;
-        counter.textContent = `${Math.floor(progress)}%`;
-        
-        if (progress > 60) textTarget.textContent = "Loading Assets...";
-        if (progress > 90) textTarget.textContent = "Welcome!";
-
-        if (progress >= 100) {
-            clearInterval(loadingInterval);
-            setTimeout(() => {
-                const content = preloader.querySelector('.preloader-content');
-                content.style.transform = 'translateY(-20px)';
-                content.style.opacity = '0';
-                content.style.transition = 'all 0.5s ease';
-                
-                setTimeout(() => {
-                    preloader.style.opacity = '0';
-                    setTimeout(() => {
-                        preloader.remove();
-                        // Smooth reveal for elements
-                        document.querySelectorAll('.section').forEach((section, index) => {
-                            section.style.opacity = '0';
-                            section.style.transform = 'translateY(20px)';
-                            setTimeout(() => {
-                                section.style.transition = 'opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
-                                section.style.opacity = '1';
-                                section.style.transform = 'translateY(0)';
-                            }, index * 100 + 100);
-                        });
-                    }, 500);
-                }, 300);
-            }, 600); // Hang at 100% briefly
-        }
-    }, 60);
-}
-
-// Add loading progress styles
-const loadingStyle = document.createElement('style');
-loadingStyle.textContent = `
-    .pt-style {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-    }
-    
-    .loading-brand {
-        font-size: 1.2rem;
-        font-weight: 700;
-        letter-spacing: 4px;
-        color: var(--text-color);
-        opacity: 0.8;
-    }
-    
-    .loading-counter {
-        font-size: 4.5rem;
-        font-weight: 300;
-        font-family: 'Outfit', sans-serif;
-        color: var(--primary-color);
-        line-height: 1;
-    }
-    
-    .loading-progress {
-        width: 250px;
-        height: 2px;
-        background: rgba(33, 32, 30, 0.1);
-        border-radius: 4px;
-        overflow: hidden;
-        position: relative;
-    }
-    
-    .progress-bar {
-        height: 100%;
-        background: var(--primary-color);
-        width: 0;
-        transition: width 0.15s ease-out;
-        border-radius: 4px;
-        box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.5);
-    }
-    
-    .loading-text {
-        font-size: 0.85rem;
-        color: var(--text-color-light);
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-weight: 500;
-        transition: opacity 0.3s ease;
-    }
-`;
-document.head.appendChild(loadingStyle);
-
 // Initialize everything
 document.addEventListener('DOMContentLoaded', () => {
-    enhancedPreloader();
     createScrollProgress();
 
     // Make sure theme is properly set
@@ -392,168 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
     body.setAttribute('data-theme', initialTheme);
     updateThemeIcon(initialTheme);
 });
-
-// Text reveal animation
-function revealText(element) {
-    const text = element.textContent;
-    element.innerHTML = '';
-
-    text.split('').forEach((char, index) => {
-        const span = document.createElement('span');
-        span.textContent = char === ' ' ? '\u00A0' : char;
-        span.style.opacity = '0';
-        span.style.transform = 'translateY(20px)';
-        span.style.transition = `opacity 0.1s ease ${index * 0.02}s, transform 0.1s ease ${index * 0.02}s`;
-        element.appendChild(span);
-
-        setTimeout(() => {
-            span.style.opacity = '1';
-            span.style.transform = 'translateY(0)';
-        }, 500 + index * 20);
-    });
-}
-
-// Enhanced 3D tilt effect
-function init3DTilt() {
-    document.querySelectorAll('.section, .project-card').forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = (y - centerY) / 8;
-            const rotateY = (centerX - x) / 8;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
-        });
-    });
-}
-
-// Color theme switching with smooth transition
-function initAdvancedTheme() {
-    const themeColors = {
-        light: {
-            primary: '#2563eb',
-            secondary: '#64748b',
-            text: '#1e293b',
-            bg: '#ffffff',
-            card: '#f8fafc'
-        },
-        dark: {
-            primary: '#3b82f6',
-            secondary: '#94a3b8',
-            text: '#f1f5f9',
-            bg: '#0f172a',
-            card: '#1e293b'
-        },
-        purple: {
-            primary: '#8b5cf6',
-            secondary: '#a78bfa',
-            text: '#1e1b4b',
-            bg: '#faf5ff',
-            card: '#f3e8ff'
-        },
-        green: {
-            primary: '#10b981',
-            secondary: '#6b7280',
-            text: '#064e3b',
-            bg: '#f0fdf4',
-            card: '#dcfce7'
-        }
-    };
-
-    // Create theme selector
-    const themeSelector = document.createElement('div');
-    themeSelector.className = 'theme-selector';
-    themeSelector.innerHTML = `
-        <div class="theme-options">
-            <div class="theme-option" data-theme="light" style="background: #2563eb"></div>
-            <div class="theme-option" data-theme="dark" style="background: #0f172a"></div>
-            <div class="theme-option" data-theme="purple" style="background: #8b5cf6"></div>
-            <div class="theme-option" data-theme="green" style="background: #10b981"></div>
-        </div>
-    `;
-
-    document.body.appendChild(themeSelector);
-
-    // Add styles for theme selector
-    const selectorStyle = document.createElement('style');
-    selectorStyle.textContent = `
-        .theme-selector {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            z-index: 1000;
-        }
-        
-        .theme-options {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .theme-option {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-        
-        .theme-option:hover {
-            transform: scale(1.2);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .theme-option.active {
-            border-color: white;
-            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
-        }
-    `;
-    document.head.appendChild(selectorStyle);
-
-    // Theme switching functionality
-    document.querySelectorAll('.theme-option').forEach(option => {
-        option.addEventListener('click', () => {
-            const theme = option.getAttribute('data-theme');
-            document.body.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-
-            // Update active state
-            document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
-            option.classList.add('active');
-        });
-    });
-}
-
-// Initialize all advanced features
-document.addEventListener('DOMContentLoaded', () => {
-    // Remove init3DTilt to prevent unwanted transforms
-    // Remove initAdvancedTheme to prevent conflicts with theme toggle
-});
-
-// Add typing effect to name (optional)
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-
-    type();
-}
 
 // Scroll to top button functionality
 document.addEventListener('DOMContentLoaded', function () {
@@ -845,88 +498,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Figma-like cursor interaction for desktop pointers
-document.addEventListener('DOMContentLoaded', () => {
-    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-
-    if (prefersReducedMotion || isCoarsePointer) {
-        return;
-    }
-
-    const body = document.body;
-    const dot = document.createElement('div');
-    dot.className = 'custom-cursor-dot';
-
-    const ring = document.createElement('div');
-    ring.className = 'custom-cursor-ring';
-    const label = document.createElement('span');
-    label.className = 'custom-cursor-label';
-    label.textContent = 'Open';
-    ring.appendChild(label);
-
-    body.appendChild(dot);
-    body.appendChild(ring);
-    body.classList.add('cursor-enhanced');
-
-    let mouseX = 0;
-    let mouseY = 0;
-    let ringX = 0;
-    let ringY = 0;
-
-    const interactiveSelectors = 'a, button, .project-card, .project-link, .filter-btn, .preview-gallery-btn';
-
-    const setCursorLabel = (target) => {
-        if (!target) {
-            label.textContent = '';
-            return;
-        }
-
-        if (target.classList.contains('project-card') || target.classList.contains('project-link')) {
-            label.textContent = 'Open';
-            return;
-        }
-
-        if (target.classList.contains('filter-btn') || target.classList.contains('preview-gallery-btn')) {
-            label.textContent = 'View';
-            return;
-        }
-
-        if (target.tagName === 'BUTTON') {
-            label.textContent = 'Click';
-            return;
-        }
-
-        label.textContent = 'Open';
-    };
-
-    const animateRing = () => {
-        ringX += (mouseX - ringX) * 0.17;
-        ringY += (mouseY - ringY) * 0.17;
-
-        dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-        ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
-
-        requestAnimationFrame(animateRing);
-    };
-
-    document.addEventListener('mousemove', (event) => {
-        mouseX = event.clientX;
-        mouseY = event.clientY;
-        body.classList.add('cursor-active');
-
-        const interactiveTarget = event.target.closest(interactiveSelectors);
-        if (interactiveTarget) {
-            body.classList.add('cursor-hover');
-            setCursorLabel(interactiveTarget);
-        } else {
-            body.classList.remove('cursor-hover');
-            label.textContent = '';
-        }
-    });
-
-    document.addEventListener('mouseleave', () => {
-        body.classList.remove('cursor-active', 'cursor-hover');
-    });
-
-    animateRing();
-});
+// Standard responsive cursor behavior without custom cursor overlay
