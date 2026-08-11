@@ -547,6 +547,28 @@ body > div[style*="height: 3px"] {
   font-weight: 600;
   color: var(--muted-color);
 }
+.stat-card-link {
+  text-decoration: none;
+  cursor: pointer;
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+.stat-card-link .stat-value {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #ffffff !important;
+}
+.stat-card-link .stat-label {
+  color: rgba(255, 255, 255, 0.85);
+}
+.stat-card-link:hover {
+  background: var(--accent-color-strong);
+  border-color: var(--accent-color-strong);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px var(--accent-glow);
+}
 
 .hero-aside {
   display: flex;
